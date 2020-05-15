@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cubeSizeController : MonoBehaviour
+public class CubeSizeController : MonoBehaviour
 {
 
     float start_height = 0;

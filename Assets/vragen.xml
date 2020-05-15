@@ -44,19 +44,59 @@
 		<vraag_en_antwoord vraag="Wie is het melkmeisje? 2">
 			<antwoorden>
 				<antwoord>
-					<text>Rembrandt</text>
+					<text>een meisje</text>
 					<correct>true</correct>
 				</antwoord>
 				<antwoord>
-					<text>Van Gogh</text>
+					<text>een pop</text>
 					<correct>false</correct>
 				</antwoord>
 				<antwoord>
-					<text>Frans Hals</text>
+					<text>dat weten we niet</text>
 					<correct>false</correct>
 				</antwoord>
 				<antwoord>
-					<text>Picasso</text>
+					<text>de vrouw van vermeer</text>
+					<correct>false</correct>
+				</antwoord>
+			</antwoorden>
+		</vraag_en_antwoord>
+		<vraag_en_antwoord vraag="Wie is het melkmeisje? 3">
+			<antwoorden>
+				<antwoord>
+					<text>antw 3 1</text>
+					<correct>true</correct>
+				</antwoord>
+				<antwoord>
+					<text>antw 3 2</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>antw 3 3</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>antw 3 4</text>
+					<correct>false</correct>
+				</antwoord>
+			</antwoorden>
+		</vraag_en_antwoord>
+		<vraag_en_antwoord vraag="Wie is het melkmeisje? 4">
+			<antwoorden>
+				<antwoord>
+					<text>antw 4 1</text>
+					<correct>true</correct>
+				</antwoord>
+				<antwoord>
+					<text>antw 4 2</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>antw 4 3</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>antw 4 4</text>
 					<correct>false</correct>
 				</antwoord>
 			</antwoorden>

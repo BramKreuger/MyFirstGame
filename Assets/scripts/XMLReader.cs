@@ -7,7 +7,7 @@ using System.IO;
 using System;
 using UnityEngine.Networking;
 
-public class xml_reader : MonoBehaviour
+public class XMLReader : MonoBehaviour
 {
     public List<Vraag> vragen;
     void Start()
