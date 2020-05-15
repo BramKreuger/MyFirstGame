@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<vraagCollectie>
+	<vragen>
+		<vraag_en_antwoord vraag="Wie heeft de nachtwacht geschilderd? 0">
+			<antwoorden>
+				<antwoord>
+					<text>Rembrandt</text>
+					<correct>true</correct>
+				</antwoord>
+				<antwoord>
+					<text>Van Gogh</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>Frans Hals</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>Picasso</text>
+					<correct>false</correct>
+				</antwoord>
+			</antwoorden>
+		</vraag_en_antwoord>
+		<vraag_en_antwoord vraag="Wanneer is de nachtwacht geschilderd? 1">
+			<antwoorden>
+				<antwoord>
+					<text>1667</text>
+					<correct>true</correct>
+				</antwoord>
+				<antwoord>
+					<text>1780</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>1910</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>1642</text>
+					<correct>false</correct>
+				</antwoord>
+			</antwoorden>
+		</vraag_en_antwoord>
+		<vraag_en_antwoord vraag="Wie is het melkmeisje? 2">
+			<antwoorden>
+				<antwoord>
+					<text>Rembrandt</text>
+					<correct>true</correct>
+				</antwoord>
+				<antwoord>
+					<text>Van Gogh</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>Frans Hals</text>
+					<correct>false</correct>
+				</antwoord>
+				<antwoord>
+					<text>Picasso</text>
+					<correct>false</correct>
+				</antwoord>
+			</antwoorden>
+		</vraag_en_antwoord>
+	</vragen>
+</vraagCollectie>
