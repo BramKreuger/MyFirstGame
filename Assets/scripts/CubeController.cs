@@ -14,7 +14,7 @@ public class CubeController : MonoBehaviour
     // vars for determining the rotation
     Quaternion startRotation;
     Quaternion endRotation;
-    float rotationProgress = -1;
+    public float rotationProgress = -1;
     float extraRotation = 0; // Make 90 degree turns
 
     public Transform textPivot;
@@ -25,25 +25,25 @@ public class CubeController : MonoBehaviour
     {
         get { return _currentTextObj; }
         set {
-                if (value > 3)
-                {
-                    
-                    _currentTextObj = 0;
-                }
-                else if(value < 0)
-                {
-                _currentTextObj = 3;
-                }
-                else
-                {
-                _currentTextObj = value;
-                }
+            if (value > 3)
+            {
+
+                _currentTextObj = 0;
             }
+            else if (value < 0)
+            {
+                _currentTextObj = 3;
+            }
+            else
+            {
+                _currentTextObj = value;
+            }
+        }
     } // The current textobj the game is showing
     int currentQuestion = 0;
 
     bool textLoaded = false;
-    List<TextObject> textObjects;
+    public List<TextObject> textObjects;
     public List<UserAnswers> correct = new List<UserAnswers>();
 
     public Color goodColor;
@@ -55,11 +55,9 @@ public class CubeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        reader = gameObject.GetComponent<XMLReader>();
-
         material = gameObject.GetComponent<Renderer>().material;
         material.color = normalColor;
-        
+
         textObjects = GetTextObjects(textPivot);
     }
 
@@ -67,56 +65,11 @@ public class CubeController : MonoBehaviour
     void Update()
     {
         // Wait to show text untill it is loaded.
-        if(textLoaded == false && reader.vragen.Count > 0)
+        if (textLoaded == false && XMLReader.vragen.Count > 0)
         {
-            UpdateText(0);
             textLoaded = true;
-        }
-
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hit);
-        Transform hitObj = hit.transform;
-
-        if (Input.GetButtonDown("Fire1") && hitObj.transform.CompareTag("checkbox")) // First check to hit checkbox
-        {
-            GameObject checkmark = hitObj.GetChild(0).gameObject;
-            checkmark.SetActive(!checkmark.activeSelf);
-            Debug.Log(hitObj.name);
-            correct[currentQuestion].correct[int.Parse(hitObj.name)] = checkmark.activeSelf;
-        }        
-        else if (Input.GetButtonDown("Fire1") && rotationProgress < 0) // Check for LMB
-        {
-            // Right side
-            if (Input.mousePosition.x > Screen.width * 0.5f)
-            {
-                if (correctAnswer())
-                {
-                    material.color = goodColor;
-
-                    if (currentQuestion < reader.vragen.Count - 1)
-                    {
-                        extraRotation += 90;
-                        CurrentTextObj += 1;
-                        currentQuestion += 1;
-                        RotateCube(extraRotation);
-                    }
-                }
-                else
-                {
-                    material.color = wrongColor;
-                }
-            }
-            else // Check for left side and if there are still questions to go back to;
-            {
-                if (currentQuestion >= 1)
-                { 
-                    extraRotation -= 90;
-                    CurrentTextObj -= 1;
-                    currentQuestion -= 1;
-                    RotateCube(extraRotation);
-                }
-            }            
+            textObjects = GetTextObjects(textPivot);
+            UpdateText(0);
         }
 
         // Rotation logic
@@ -127,11 +80,18 @@ public class CubeController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(startRotation, endRotation, rotationProgress);
             textPivot.rotation = Quaternion.Lerp(startRotation, endRotation, rotationProgress);
         }
-        else if(rotationProgress > 1)
+        else if (rotationProgress > 1)
         {
             rotationProgress = -1;
             material.color = normalColor;
         }
+    }
+
+    public void CheckMark(Transform checkbox)
+    {
+        GameObject checkmark = checkbox.GetChild(0).gameObject;
+        checkmark.SetActive(!checkmark.activeSelf);
+        correct[currentQuestion].correct[int.Parse(checkbox.name)] = checkmark.activeSelf;
     }
 
     void RotateCube(float rot)
@@ -146,17 +106,17 @@ public class CubeController : MonoBehaviour
     void UpdateText(int textNr)
     {
         TextObject textObject = textObjects[textNr]; // The current Text-question-Object
-        Vraag vraag = reader.vragen[currentQuestion];
+        Vraag vraag = XMLReader.vragen[currentQuestion];
         textObject.vraag.SetText(vraag.vraag);
-        textObject.teller.SetText((currentQuestion + 1) + " van de " + reader.vragen.Count);
+        textObject.teller.SetText((currentQuestion + 1) + " van de " + XMLReader.vragen.Count);
 
-        for (int i=0; i < vraag.antwoorden.Count; i++)
+        for (int i = 0; i < vraag.antwoorden.Count; i++)
         {
             textObject.antwoorden[i].SetText(vraag.antwoorden[i].text);
-        }     
-        
+        }
+
         // All the logic for checking if the correctList is setup
-        if(currentQuestion >= correct.Count) // make new list of bools
+        if (currentQuestion >= correct.Count) // make new list of bools
         {
             correct.Add(new UserAnswers(4));
             for (int i = 0; i < 4; i++)
@@ -168,18 +128,50 @@ public class CubeController : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                Debug.Log(textNr + " " + correct[currentQuestion].correct[i]);
                 textObject.checkMarks[i].SetActive(correct[currentQuestion].correct[i]);
             }
         }
     }
 
+    public void CheckAnswers()
+    {
+        Debug.Log("checkanswers");
+        if (rotationProgress < 0) // Check for LMB
+        {
+            if (correctAnswer())
+            {
+                material.color = goodColor;
+
+                if (currentQuestion < XMLReader.vragen.Count - 1)
+                {
+                    extraRotation += 90;
+                    CurrentTextObj += 1;
+                    currentQuestion += 1;
+                    RotateCube(extraRotation);
+                }
+            }
+            else
+            {
+                material.color = wrongColor;
+            }
+            /*
+            if (currentQuestion >= 1)
+            {
+                extraRotation -= 90;
+                CurrentTextObj -= 1;
+                currentQuestion -= 1;
+                RotateCube(extraRotation);
+            }*/
+        }
+    }
+
+
     bool correctAnswer()
     {
         bool _correct = true;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < XMLReader.vragen[currentQuestion].antwoorden.Count; i++)
         {
-            if(reader.vragen[currentQuestion].antwoorden[i].correct != correct[currentQuestion].correct[i])
+            if (XMLReader.vragen[currentQuestion].antwoorden[i].correct != correct[currentQuestion].correct[i])
             {
                 _correct = false;
             }
@@ -192,12 +184,11 @@ public class CubeController : MonoBehaviour
         List<TextObject> textObjects = new List<TextObject>();
         foreach (Transform textObject in cubeEmpty.transform) // Loop through all childeren of the pivot
         {
-            TextMeshPro vraag            = textObject.GetChild(0).GetComponent<TextMeshPro>();
+            TextMeshPro vraag = textObject.GetChild(0).GetComponent<TextMeshPro>();
             List<TextMeshPro> antwoorden = new List<TextMeshPro>();
-            List<GameObject> checkBoxes  = new List<GameObject>();
-            List<GameObject> checkMarks  = new List<GameObject>();
-            TextMeshPro teller             = textObject.GetChild(3).GetComponent<TextMeshPro>();
-
+            List<GameObject> checkBoxes = new List<GameObject>();
+            List<GameObject> checkMarks = new List<GameObject>();
+            TextMeshPro teller = textObject.GetChild(3).GetComponent<TextMeshPro>();
             Transform antw = textObject.GetChild(1);
             for (int i = 0; i < antw.childCount; ++i)
             {
@@ -207,7 +198,7 @@ public class CubeController : MonoBehaviour
             Transform _checkboxes = textObject.GetChild(2);
             for (int i = 0; i < _checkboxes.childCount; ++i)
             {
-                GameObject checkbox  = _checkboxes.GetChild(i).gameObject;
+                GameObject checkbox = _checkboxes.GetChild(i).gameObject;
                 GameObject checkmark = _checkboxes.GetChild(i).GetChild(0).gameObject;
                 checkMarks.Add(checkmark);
                 checkBoxes.Add(checkbox);
@@ -217,7 +208,8 @@ public class CubeController : MonoBehaviour
         }
         return textObjects;
     }
-    [Serializable]
+
+[Serializable]
     public class UserAnswers
     {
         public List<bool> correct;
@@ -230,8 +222,8 @@ public class CubeController : MonoBehaviour
             }
         }
     }
-
-    class TextObject
+    [Serializable]
+    public class TextObject
     {
         public TextMeshPro vraag;
         public List<TextMeshPro> antwoorden;

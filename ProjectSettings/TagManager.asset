@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - checkbox
+  - move
   layers:
   - Default
   - TransparentFX

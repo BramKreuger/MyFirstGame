@@ -7,19 +7,24 @@ using System.IO;
 using System;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Read in the XML Files
+/// </summary>
 public class XMLReader : MonoBehaviour
 {
-    public List<Vraag> vragen;
+    public static List<Vraag> vragen;
     void Start()
-    {        
-        StartCoroutine(GetText());
+    {
     }
 
 
 
-    IEnumerator GetText()
+    public IEnumerator GetText(int questionNR)
     {
-        UnityWebRequest www = UnityWebRequest.Get("https://www.bramkreuger.com/game/vragen.xml");
+
+        string url = "https://www.bramkreuger.com/cube/vragen/kubus_" + questionNR.ToString() + ".xml";
+        
+        UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError)
